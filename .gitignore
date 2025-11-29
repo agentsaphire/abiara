@@ -1,0 +1,35 @@
+# Website directory (deployed separately to Vercel)
+website/
+
+# Old bot versions
+reset_bot_v2.py
+reset_bot_v3.py
+reset_bot_v4.py
+reset_bot_slash.py
+reset_boy.py
+
+# Test files
+bot_test.py
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.venv
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
