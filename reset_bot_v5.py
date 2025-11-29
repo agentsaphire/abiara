@@ -137,11 +137,21 @@ async def reset_command(ctx, *args):
             
             reset_minutes = data['reset_dt'].strftime('%M')
             
-            if data["elapsed"] < 40:
-                minutes_until_window = int(40 - data["elapsed"])
+            # Recalculate elapsed time from reset_dt to get current status
+            now = datetime.now()
+            current_elapsed = (now - data['reset_dt']).total_seconds() / 60
+            
+            # Check if reset is still valid (within 80 minutes)
+            if current_elapsed < 0 or current_elapsed >= 80:
+                # Reset is too old, skip it or show expired message
+                continue
+            
+            if current_elapsed < 40:
+                minutes_until_window = int(40 - current_elapsed)
                 status = f"→ Next window starts at XX:{data['safe_end'].strftime('%M')} (in ~{minutes_until_window} minutes)"
             else:
-                status = f"→ Window active until XX:{data['reset_end'].strftime('%M')}"
+                minutes_until_end = int(80 - current_elapsed)
+                status = f"→ Window active until XX:{data['reset_end'].strftime('%M')} (ends in ~{minutes_until_end} minutes)"
             
             messages.append(
                 f"**{tracked_ammo}**\n"
